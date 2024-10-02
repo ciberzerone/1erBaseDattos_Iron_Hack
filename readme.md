@@ -106,15 +106,7 @@ id_coche | marca | modelo | año | propietario_nombre | propietario_direccion | 
 
 ```sql
 
-CREATE TABLE Coches (
-    id_coche INT PRIMARY KEY,
-    marca VARCHAR(255),
-    modelo VARCHAR(255),
-    año INT,
-    id_propietario INT,
-    id_taller INT
-);
-
+-- Crear primero las tablas que serán referenciadas por claves foráneas
 CREATE TABLE Propietarios (
     id_propietario INT PRIMARY KEY,
     nombre VARCHAR(255),
@@ -127,12 +119,129 @@ CREATE TABLE Talleres (
     nombre VARCHAR(255),
     direccion VARCHAR(255)
 );
+
+-- Ahora crear la tabla Coches, incluyendo las claves foráneas
+CREATE TABLE Coches (
+    id_coche INT PRIMARY KEY,
+    marca VARCHAR(255),
+    modelo VARCHAR(255),
+    año INT,
+    id_propietario INT,
+    id_taller INT,
+    CONSTRAINT fk_propietario FOREIGN KEY (id_propietario) REFERENCES Propietarios(id_propietario),
+    CONSTRAINT fk_taller FOREIGN KEY (id_taller) REFERENCES Talleres(id_taller)
+);
 ```
 ### Diagrama de Relaciones
 
 El diagrama muestra la relación entre las tablas Coches, Propietarios y Talleres, asegurando una estructura sin redundancias.
 
 ![Database](https://github.com/ciberzerone/1erBaseDattos_Iron_Hack/blob/main/img/tablasCoches01.jpg)
+
+
+## Ejercicio 4: Normalización de la Base de Datos de Canciones
+
+### Tabla Inicial
+La tabla Canciones contiene información sobre canciones, incluyendo detalles del artista, álbum, año de lanzamiento y género.
+
+```plaintext
+
+Canciones
+---------
+id_cancion | titulo | artista | album | año_lanzamiento | genero | duracion | compositor
+```
+
+### Análisis de Redundancias y Dependencias
+
+    **Dependencias transitivas:** Los artistas, álbumes, géneros y compositores tienen dependencias transitivas.
+    **Redundancias:** Estos datos pueden repetirse para varias canciones.
+
+### Tabla Normalizada (3FN)
+
+```sql
+
+CREATE TABLE Canciones (
+    id_cancion INT PRIMARY KEY,
+    titulo VARCHAR(255),
+    id_artista INT,
+    id_album INT,
+    año_lanzamiento INT,
+    id_genero INT,
+    duracion TIME
+);
+
+CREATE TABLE Artistas (
+    id_artista INT PRIMARY KEY,
+    nombre VARCHAR(255)
+);
+
+CREATE TABLE Albumes (
+    id_album INT PRIMARY KEY,
+    nombre VARCHAR(255)
+);
+
+CREATE TABLE Generos (
+    id_genero INT PRIMARY KEY,
+    genero VARCHAR(255)
+);
+
+CREATE TABLE Compositores (
+    id_compositor INT PRIMARY KEY,
+    nombre VARCHAR(255)
+);
+```
+
+### Diagrama de Relaciones
+
+Las tablas normalizadas permiten una representación más clara y flexible de la información sobre canciones.
+
+
+
+## Ejercicio 5: Normalización de la Base de Datos de Animales
+
+### Tabla Inicial
+
+La tabla Animales contiene información sobre animales, sus propietarios y veterinarios.
+
+```plaintext
+
+Animales
+--------
+id_animal | nombre | especie | edad | propietario_nombre | propietario_direccion | veterinario_nombre | veterinario_direccion
+```
+### Análisis de Redundancias y Dependencias
+
+    Dependencias transitivas: La información del propietario y del veterinario tiene dependencias transitivas.
+    Redundancias: Los mismos propietarios y veterinarios pueden estar relacionados con múltiples animales.
+
+### Tabla Normalizada (3FN)
+
+```sql
+
+CREATE TABLE Animales (
+    id_animal INT PRIMARY KEY,
+    nombre VARCHAR(255),
+    especie VARCHAR(255),
+    edad INT,
+    id_propietario INT,
+    id_veterinario INT
+);
+
+CREATE TABLE Propietarios (
+    id_propietario INT PRIMARY KEY,
+    nombre VARCHAR(255),
+    direccion VARCHAR(255)
+);
+
+CREATE TABLE Veterinarios (
+    id_veterinario INT PRIMARY KEY,
+    nombre VARCHAR(255),
+    direccion VARCHAR(255)
+);
+```
+### Diagrama de Relaciones
+
+El diagrama de relaciones garantiza que cada animal, propietario y veterinario estén correctamente estructurados sin redundancias.
 
 
 ## Instrucciones para Ejecutar el Proyecto
