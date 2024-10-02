@@ -80,6 +80,60 @@ ALTER TABLE Peliculas_Actores
 
 ![Normalizacion y Relaciones](https://github.com/ciberzerone/1erBaseDattos_Iron_Hack/blob/main/img/eipeliculas.jpg)
 
+<hr>
+
+## Ejercicio 2: Normalización de la Base de Datos de Coches
+
+
+### Tabla Inicial
+
+La tabla Coches contiene información sobre los coches, sus propietarios y los talleres asociados.
+
+```plaintext
+
+Coches
+------
+id_coche | marca | modelo | año | propietario_nombre | propietario_direccion | propietario_telefono | taller_nombre | taller_direccion
+```
+![Database](https://github.com/ciberzerone/1erBaseDattos_Iron_Hack/blob/main/img/tablacoche.jpg)
+
+### Análisis de Redundancias y Dependencias
+
+    Dependencias transitivas: Los detalles del propietario y del taller son dependencias transitivas.
+    Redundancias: Los propietarios y talleres pueden repetirse para varios coches.
+
+### Tabla Normalizada (3FN)
+
+```sql
+
+CREATE TABLE Coches (
+    id_coche INT PRIMARY KEY,
+    marca VARCHAR(255),
+    modelo VARCHAR(255),
+    año INT,
+    id_propietario INT,
+    id_taller INT
+);
+
+CREATE TABLE Propietarios (
+    id_propietario INT PRIMARY KEY,
+    nombre VARCHAR(255),
+    direccion VARCHAR(255),
+    telefono VARCHAR(255)
+);
+
+CREATE TABLE Talleres (
+    id_taller INT PRIMARY KEY,
+    nombre VARCHAR(255),
+    direccion VARCHAR(255)
+);
+```
+### Diagrama de Relaciones
+
+El diagrama muestra la relación entre las tablas Coches, Propietarios y Talleres, asegurando una estructura sin redundancias.
+
+![Database](https://github.com/ciberzerone/1erBaseDattos_Iron_Hack/blob/main/img/tablasCoches01.jpg)
+
 
 ## Instrucciones para Ejecutar el Proyecto
 
