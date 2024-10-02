@@ -197,13 +197,13 @@ CREATE TABLE Equipos_Jugadores (
 );
 
 ```
-![Database](https://github.com/ciberzerone/1erBaseDattos_Iron_Hack/blob/main/img/tablasCoches01.jpg)
+![Database](https://github.com/ciberzerone/1erBaseDattos_Iron_Hack/blob/main/img/insertEquipos.jpg)
 
 ### Diagrama de Relaciones
 
 Este diagrama muestra cómo las relaciones entre los equipos, entrenadores y jugadores han sido estructuradas de manera eficiente.
 
-![Database](https://github.com/ciberzerone/1erBaseDattos_Iron_Hack/blob/main/img/eicoches.jpg)
+![Database](https://github.com/ciberzerone/1erBaseDattos_Iron_Hack/blob/main/img/eiequipos.jpg)
 <hr>
 
 
@@ -272,13 +272,13 @@ alter table Canciones
     add CONSTRAINT fk_genero_canciones FOREIGN KEY (id_genero) REFERENCES Generos_Canciones(id_genero);
 
 ```
-![Database](https://github.com/ciberzerone/1erBaseDattos_Iron_Hack/blob/main/img/tablasCoches01.jpg)
+![Database](https://github.com/ciberzerone/1erBaseDattos_Iron_Hack/blob/main/img/tablasCanciones01.jpg)
 
 ### Diagrama de Relaciones
 
 Las tablas normalizadas permiten una representación más clara y flexible de la información sobre canciones.
 
-![Database](https://github.com/ciberzerone/1erBaseDattos_Iron_Hack/blob/main/img/eicoches.jpg)
+
 <hr>
 
 ## Ejercicio 5: Normalización de la Base de Datos de Animales
@@ -338,7 +338,7 @@ CREATE TABLE Animales (
 
 El diagrama de relaciones garantiza que cada animal, propietario y veterinario estén correctamente estructurados sin redundancias.
 
-![Database](https://github.com/ciberzerone/1erBaseDattos_Iron_Hack/blob/main/img/tablasCoches01.jpg)
+![Database](https://github.com/ciberzerone/1erBaseDattos_Iron_Hack/blob/main/img/eianimales.jpg)
 
 
 <hr>
@@ -367,3 +367,13 @@ Los principales pasos incluyen:
 2. **Creación de nuevas entidades**: Generación de tablas intermedias y claves foráneas para establecer relaciones entre las entidades.
 3. **Validación en 3FN**: Garantizar que todas las tablas estén libres de redundancias y que las dependencias sean correctas.
 
+## Author
+
+### Nombre
+**Yimmy Beltran**
+
+## Información de Contacto
+
+- **LinkedIn**: [https://linkedin.com/in/tu-perfil](https://linkedin.com/in/tu-perfil)
+- **GitHub**: [https://github.com/ciberzerone](https://github.com/ciberzerone)
+- **Correo Electrónico**: [tucorreo@dominio.com](mailto:tucorreo@dominio.com)
