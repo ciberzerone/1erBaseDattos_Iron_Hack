@@ -1,4 +1,4 @@
-![Normalizacion y Relaciones](https://github.com/ciberzerone/1erBaseDattos_Iron_Hack/blob/main/img/encabezado.jpg)
+![Normalizacion y Relaciones](https://github.com/ciberzerone/1erBaseDattos_Iron_Hack/blob/main/img/encabezado.png)
 
 ![Database](https://user-images.githubusercontent.com/23629340/40541063-a07a0a8a-601a-11e8-91b5-2f13e4e6b441.png)
 
