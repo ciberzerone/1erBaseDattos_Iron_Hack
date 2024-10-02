@@ -376,4 +376,4 @@ Los principales pasos incluyen:
 
 - **LinkedIn**: [https://www.linkedin.com/in/gianmarco-beltran-13959b232/](https://www.linkedin.com/in/gianmarco-beltran-13959b232/)
 - **GitHub**: [https://github.com/ciberzerone](https://github.com/ciberzerone)
-- **Correo Electrónico**: [tucorreo@dominio.com](mailto:gianmarcobeltran@gmail.com)
+- **Correo Electrónico**: [gianmarcobeltran@gmail.com](mailto:gianmarcobeltran@gmail.com)
