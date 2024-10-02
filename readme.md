@@ -132,11 +132,79 @@ CREATE TABLE Coches (
     CONSTRAINT fk_taller FOREIGN KEY (id_taller) REFERENCES Talleres(id_taller)
 );
 ```
+
+![Database](https://github.com/ciberzerone/1erBaseDattos_Iron_Hack/blob/main/img/tablasCoches01.jpg)
+
 ### Diagrama de Relaciones
 
 El diagrama muestra la relación entre las tablas Coches, Propietarios y Talleres, asegurando una estructura sin redundancias.
 
+![Database](https://github.com/ciberzerone/1erBaseDattos_Iron_Hack/blob/main/img/eicoches.jpg)
+
+<hr>
+
+### Ejercicio 3: Normalización de la Base de Datos de Equipos de Fútbol
+
+
+## Tabla Inicial
+
+La tabla EquiposFutbol contiene información sobre equipos de fútbol, incluyendo detalles del estadio, entrenador y jugadores.
+
+```plaintext
+
+EquiposFutbol
+-------------
+id_equipo | nombre_equipo | estadio | entrenador | ciudad | jugador1 | jugador2 | jugador3
+```
+### Análisis de Redundancias y Dependencias
+
+    Dependencias transitivas: La relación entre equipo, estadio, ciudad y entrenador puede generar redundancias.
+    Redundancias: Los jugadores pueden aparecer en múltiples equipos.
+
+### Tabla Normalizada (3FN)
+
+```sql
+
+-- Crear la tabla Entrenadores
+CREATE TABLE Entrenadores (
+    id_entrenador INT PRIMARY KEY,
+    nombre VARCHAR(255)
+);
+
+-- Crear la tabla Jugadores
+CREATE TABLE Jugadores (
+    id_jugador INT PRIMARY KEY,
+    nombre VARCHAR(255)
+);
+
+-- Crear la tabla Equipos con la clave foránea hacia Entrenadores
+CREATE TABLE Equipos (
+    id_equipo INT PRIMARY KEY,
+    nombre_equipo VARCHAR(255),
+    estadio VARCHAR(255),
+    ciudad VARCHAR(255),
+    id_entrenador INT,
+    CONSTRAINT fk_entrenador FOREIGN KEY (id_entrenador) REFERENCES Entrenadores(id_entrenador)
+);
+
+-- Crear la tabla de relación muchos a muchos entre Equipos y Jugadores
+CREATE TABLE Equipos_Jugadores (
+    id_equipo INT,
+    id_jugador INT,
+    PRIMARY KEY (id_equipo, id_jugador),
+    CONSTRAINT fk_equipo FOREIGN KEY (id_equipo) REFERENCES Equipos(id_equipo),
+    CONSTRAINT fk_jugador FOREIGN KEY (id_jugador) REFERENCES Jugadores(id_jugador)
+);
+
+```
 ![Database](https://github.com/ciberzerone/1erBaseDattos_Iron_Hack/blob/main/img/tablasCoches01.jpg)
+
+### Diagrama de Relaciones
+
+Este diagrama muestra cómo las relaciones entre los equipos, entrenadores y jugadores han sido estructuradas de manera eficiente.
+
+![Database](https://github.com/ciberzerone/1erBaseDattos_Iron_Hack/blob/main/img/eicoches.jpg)
+<hr>
 
 
 ## Ejercicio 4: Normalización de la Base de Datos de Canciones
@@ -150,7 +218,7 @@ Canciones
 ---------
 id_cancion | titulo | artista | album | año_lanzamiento | genero | duracion | compositor
 ```
-
+![Database](https://github.com/ciberzerone/1erBaseDattos_Iron_Hack/blob/main/img/tablacanciones.jpg)
 ### Análisis de Redundancias y Dependencias
 
     **Dependencias transitivas:** Los artistas, álbumes, géneros y compositores tienen dependencias transitivas.
@@ -160,42 +228,58 @@ id_cancion | titulo | artista | album | año_lanzamiento | genero | duracion | c
 
 ```sql
 
-CREATE TABLE Canciones (
-    id_cancion INT PRIMARY KEY,
-    titulo VARCHAR(255),
-    id_artista INT,
-    id_album INT,
-    año_lanzamiento INT,
-    id_genero INT,
-    duracion TIME
-);
 
-CREATE TABLE Artistas (
+CREATE TABLE Artistas_Canciones (
     id_artista INT PRIMARY KEY,
     nombre VARCHAR(255)
 );
 
+-- Crear la tabla Albumes
 CREATE TABLE Albumes (
     id_album INT PRIMARY KEY,
     nombre VARCHAR(255)
 );
 
-CREATE TABLE Generos (
+-- Crear la tabla Generos
+CREATE TABLE Generos_Canciones (
     id_genero INT PRIMARY KEY,
     genero VARCHAR(255)
 );
 
+-- Crear la tabla Compositores
 CREATE TABLE Compositores (
     id_compositor INT PRIMARY KEY,
     nombre VARCHAR(255)
 );
+
+-- Crear la tabla Canciones con claves foráneas hacia Artistas, Albumes y Generos
+CREATE TABLE Canciones (
+    id_cancion INT PRIMARY KEY,
+    titulo VARCHAR(255),
+    id_artista INT,
+    id_album INT,
+    ano_lanzamiento INT,
+    id_genero INT,
+    duracion TIME
+);
+
+
+alter table Canciones
+   add CONSTRAINT fk_artista_canciones FOREIGN KEY (id_artista) REFERENCES Artistas_Canciones(id_artista);
+alter table Canciones
+    add CONSTRAINT fk_album FOREIGN KEY (id_album) REFERENCES Albumes(id_album);
+alter table Canciones
+    add CONSTRAINT fk_genero_canciones FOREIGN KEY (id_genero) REFERENCES Generos_Canciones(id_genero);
+
 ```
+![Database](https://github.com/ciberzerone/1erBaseDattos_Iron_Hack/blob/main/img/tablasCoches01.jpg)
 
 ### Diagrama de Relaciones
 
 Las tablas normalizadas permiten una representación más clara y flexible de la información sobre canciones.
 
-
+![Database](https://github.com/ciberzerone/1erBaseDattos_Iron_Hack/blob/main/img/eicoches.jpg)
+<hr>
 
 ## Ejercicio 5: Normalización de la Base de Datos de Animales
 
@@ -209,6 +293,9 @@ Animales
 --------
 id_animal | nombre | especie | edad | propietario_nombre | propietario_direccion | veterinario_nombre | veterinario_direccion
 ```
+
+![Database](https://github.com/ciberzerone/1erBaseDattos_Iron_Hack/blob/main/img/tablasCoches01.jpg) 
+
 ### Análisis de Redundancias y Dependencias
 
     Dependencias transitivas: La información del propietario y del veterinario tiene dependencias transitivas.
@@ -218,16 +305,9 @@ id_animal | nombre | especie | edad | propietario_nombre | propietario_direccion
 
 ```sql
 
-CREATE TABLE Animales (
-    id_animal INT PRIMARY KEY,
-    nombre VARCHAR(255),
-    especie VARCHAR(255),
-    edad INT,
-    id_propietario INT,
-    id_veterinario INT
-);
-
-CREATE TABLE Propietarios (
+-- Creación de las tablas base
+USE lab01;
+CREATE TABLE Propietarios_Animales (
     id_propietario INT PRIMARY KEY,
     nombre VARCHAR(255),
     direccion VARCHAR(255)
@@ -238,10 +318,30 @@ CREATE TABLE Veterinarios (
     nombre VARCHAR(255),
     direccion VARCHAR(255)
 );
+
+CREATE TABLE Animales (
+    id_animal INT PRIMARY KEY,
+    nombre VARCHAR(255),
+    especie VARCHAR(255),
+    edad INT,
+    id_propietario INT,
+    id_veterinario INT,
+    CONSTRAINT fk_propietario_animales FOREIGN KEY (id_propietario) REFERENCES Propietarios_Animales(id_propietario),
+    CONSTRAINT fk_veterinario_animales FOREIGN KEY (id_veterinario) REFERENCES Veterinarios(id_veterinario)
+);
+
 ```
+![Database](https://github.com/ciberzerone/1erBaseDattos_Iron_Hack/blob/main/img/tablasAnimales01.jpg)
+
+
 ### Diagrama de Relaciones
 
 El diagrama de relaciones garantiza que cada animal, propietario y veterinario estén correctamente estructurados sin redundancias.
+
+![Database](https://github.com/ciberzerone/1erBaseDattos_Iron_Hack/blob/main/img/tablasCoches01.jpg)
+
+
+<hr>
 
 
 ## Instrucciones para Ejecutar el Proyecto
